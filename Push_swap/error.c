@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yakhadad <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 11:28:25 by yakhadad          #+#    #+#             */
-/*   Updated: 2024/05/31 11:29:32 by yakhadad         ###   ########.fr       */
+/*   Updated: 2024/07/02 22:01:43 by yakhadad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "push_swap.h"
 
 void	free_node(t_stack **node)
 {
-	t_stack *tmp;
+	t_stack	*tmp;
 
 	tmp = *node;
-	while(tmp->next)
+	while (tmp->next)
 	{
-		while(tmp->next->next)
+		while (tmp->next->next)
 			tmp = tmp->next;
 		free(tmp->next);
 		tmp->next = NULL;
@@ -31,7 +31,7 @@ void	ft_error(t_stack **a)
 {
 	if (*a)
 		free_node(a);
-	ft_printf("Error\n");
+	write(2, "Error\n", 6);
 	exit(1);
 }
 

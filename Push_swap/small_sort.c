@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   small_sort.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yakhadad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/01 00:18:12 by yakhadad          #+#    #+#             */
+/*   Updated: 2024/07/02 22:00:29 by yakhadad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "push_swap.h"
 
 void	ft_sort_3(t_stack **a)
 {
-	int	i;
-	int	j;
-	int k;
+	int		i;
+	int		j;
+	int		k;
 	t_stack	*tmp;
 
 	tmp = *a;
@@ -22,7 +33,7 @@ void	ft_sort_3(t_stack **a)
 		action("ra", a, NULL);
 		action("sa", a, NULL);
 	}
-	else if(j < i && j < k && k > i)
+	else if (j < i && j < k && k > i)
 		action("sa", a, NULL);
 	else
 		action("ra", a, NULL);

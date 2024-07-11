@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checkers.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yakhadad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/01 00:17:54 by yakhadad          #+#    #+#             */
+/*   Updated: 2024/07/02 22:14:35 by yakhadad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "push_swap.h"
 
 int	ft_atoi_v2(char *s, t_stack **a, t_stack **tmp)
@@ -23,8 +34,8 @@ int	ft_atoi_v2(char *s, t_stack **a, t_stack **tmp)
 		nb = nb * 10 + (s[i] - 48);
 		i++;
 	}
-	if (s[i] != 0 || i == 0 || ((s[i - 1] == '-' || s[i - 1] == '+')
-			&& s[i] == 0) || nb * sign < -2147483648 || nb * sign > 2147483647)
+	if (s[i] != 0 || i == 0 || (s[i - 1] == '-' || s[i - 1] == '+')
+		|| nb * sign < -2147483648 || nb * sign > 2147483647)
 		ft_check_node(a, tmp);
 	return (nb * sign);
 }
@@ -94,8 +105,8 @@ void	ft_str_checker(char *s, t_stack **a, char **str)
 		nb = nb * 10 + (s[i] - 48);
 		i++;
 	}
-	if (s[i] != 0 || i == 0 || ((s[i - 1] == '-' || s[i - 1] == '+')
-			&& s[i] == 0) || nb * sign < -2147483648 || nb * sign > 2147483647)
+	if (s[i] != 0 || i == 0 || (s[i - 1] == '-' || s[i - 1] == '+')
+		|| nb * sign < -2147483648 || nb * sign > 2147483647)
 		ft_str_error(a, str);
 }
 
@@ -108,7 +119,7 @@ void	ft_split_2(t_stack **a, char *s)
 	if (*str == NULL)
 		ft_str_error(a, str);
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		ft_str_checker(str[i], a, str);
 		i++;
