@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = so_long
-SRC = so_long.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+SRC = so_long.c checkers.c fillers.c errors.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
 CFLAGS = -Wall -Wextra -Werror
 LIBFT = libft/libft.a
 PRINTF = ft_printf/libftprintf.a

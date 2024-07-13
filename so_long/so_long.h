@@ -20,10 +20,21 @@
 typedef struct s_map
 {
     int     fd;
-    size_t     width;
-    size_t     hight;
-    char    **arr;
+    size_t  width;
+    size_t  hight;
+    int     coins;
+    char    **map;
 }              t_map;
 
+void	ft_error(char *s);
+void	ft_free_str(char **str);
+void    ft_element_error(t_map *game, int c, char e, char *str);
+char	*ft_fill_map(t_map *game, char *file);
+void	ft_split_map(t_map *game, char *tmp);
+void	ft_check_ber(char *str);
+void	ft_check_lines(char *tmp);
+void	ft_check_walls(t_map *game);
+void    ft_check_land(t_map *game);
+void    ft_check_elements(t_map *game);
 
 #endif

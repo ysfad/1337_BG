@@ -11,81 +11,101 @@
 /* ************************************************************************** */
 #include "so_long.h"
 
-void    ft_error(void)
+char	**ft_copy_map(t_map *game)
 {
-    ft_printf("Error\n");
-    exit(1);
+	int		i;
+	char	**copy_map;
+
+	i = 0;
+	copy_map = (char **)malloc((game->hight + 1) * sizeof(char *));
+	while (game->map[i])
+	{
+		copy_map[i] = ft_strdup(game->map[i]);
+		i++;
+	}
+	copy_map[i] = NULL;
+	return (copy_map);
 }
 
-void    ft_check_ber(char *str)
-{
-    int len;
+// void    ft_flood_fill(t_map *game, char **map)
+// {
+//     int i;
+//     int j;
 
-    len = ft_strlen(str);
-    if (len == 4)
-        ft_error();
-    str = str + len - 4;
-    if (str[0] != '.' && str[1] != 'b' && str[1] != 'B'
-        && str[2] != 'e' && str[2] != 'E'
-        && str[3] != 'r' && str[3] != 'R')
-        ft_error();
+//     i = 1;
+//     while(map[game->hight - 1])
+//     {
+//         j = 1;
+//         while(map[i][game->width - 1])
+//         {
+            
+//         }
+//         i++;
+//     }
+// }
+
+void	ft_check_land(t_map *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (game->map[i])
+	{
+		j = 0;
+		while (game->map[i][j])
+		{
+			if (game->map[i][j] != '0' && game->map[i][j] != '1'
+				&& game->map[i][j] != 'C' && game->map[i][j] != 'P'
+				&& game->map[i][j] != 'E')
+			{
+				ft_free_str(game->map);
+				ft_printf("Error\nwrong element inside the map.\n");
+                ft_printf("Elements: 1, 0, C, P, E.\n");
+                exit(1);
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
-char    *ft_arr_fill(char *line)
+void	ft_check_road(t_map *game)
 {
-    int     len;
-    char    *tmp;
+	char	**map_copy;
 
-    len = ft_strlen(line);
-    tmp = malloc(sizeof(char) * (len + 1));
-    if (tmp == NULL)
-    {
-        free (tmp);
-        return (NULL);
-    }
-    ft_strlcpy(tmp, line, len);
-    return (tmp);
+	map_copy = ft_copy_map(game);
+ 
 }
 
-void    ft_map(t_map *map, char *file)
+void	ft_map(t_map *game, char *file)
 {
-    int     i;
-    char    *line;
+	char	*lines;
 
-    i = 0;
-    map->fd = open(file, O_RDONLY);
-    while(1)
-    {
-        line = get_next_line(map->fd);
-        if (line == NULL)
-            break;
-        map->arr[i] = ft_arr_fill(line);
-        if (map->arr[i] == NULL)
-            ft_error();
-        map->hight++;
-        if (map->width == 0)
-            map->width = ft_strlen(line);
-        if (map->width != ft_strlen(line))
-            ft_error();
-        i++;
-    }
+	lines = ft_fill_map(game, file);
+	ft_check_lines(lines);
+	ft_split_map(game, lines);
+	ft_check_walls(game);
+	ft_check_elements(game);
+	ft_check_road(game);
 }
 
-void    ft_struct_fill(t_map *map)
+void	ft_struct_fill(t_map *game)
 {
-    map->fd = 0;
-    map->width = 0;
-    map->hight = 0;
-    map->arr = NULL;
+	game->fd = 0;
+	game->width = 0;
+	game->hight = 0;
+	game->coins = 0;
+	game->map = NULL;
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    t_map map;
+	t_map game;
 
-    if (ac != 2)
-        return(0);
-    ft_check_ber(av[1]);
-    ft_struct_fill(&map);
-    ft_map(&map, av[1]);
+	if (ac != 2)
+		return (0);
+	ft_check_ber(av[1]);
+	ft_struct_fill(&game);
+	ft_map(&game, av[1]);
 }
