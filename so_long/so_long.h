@@ -20,9 +20,11 @@
 typedef struct s_map
 {
     int     fd;
-    size_t  width;
-    size_t  hight;
+    int     width;
+    int     hight;
     int     coins;
+    int     exit[2];
+    int     player[2];
     char    **map;
 }              t_map;
 

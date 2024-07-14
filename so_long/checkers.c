@@ -48,8 +48,8 @@ void	ft_check_lines(char *tmp)
 
 void	ft_check_walls(t_map *game)
 {
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 	int		x;
 
 	i = 0;

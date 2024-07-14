@@ -27,22 +27,32 @@ char	**ft_copy_map(t_map *game)
 	return (copy_map);
 }
 
-// void    ft_flood_fill(t_map *game, char **map)
-// {
-//     int i;
-//     int j;
+void    ft_location(t_map *game, char **map)
+{
+    int i;
+    int j;
 
-//     i = 1;
-//     while(map[game->hight - 1])
-//     {
-//         j = 1;
-//         while(map[i][game->width - 1])
-//         {
-            
-//         }
-//         i++;
-//     }
-// }
+    i = 1;
+    while(i < game->hight - 1)
+    {
+        j = 1;
+        while(j < game->width - 1)
+        {
+            if (map[i][j] == 'E')
+			{
+				game->exit[0] = j;
+				game->exit[1] = i;
+			}
+			if (map[i][j] == 'P')
+			{
+				game->player[0] = j;
+				game->player[1] = i;
+			}
+			j++;
+		}
+        i++;
+    }
+}
 
 void	ft_check_land(t_map *game)
 {
@@ -70,12 +80,45 @@ void	ft_check_land(t_map *game)
 	}
 }
 
+void	ft_flood_fill(char **map, int *i, int *j)
+{
+	while()
+	{
+		
+	}
+}
+
+void	ft_reach_exit(t_map *game, char **map)
+{
+	int	i;
+	int	j;
+
+	i = game->exit[1];
+	j = game->exit[0];
+	while(map[i - 1][j] != 'P' && map[i + 1][j] != 'P'
+		&& map[i][j - 1] != 'P' && map[i][j + 1] != 'P')
+	{
+		if (map[i - 1][j] != '1' && map[i + 1][j] != '1'
+		&& map[i][j - 1] != '1' && map[i][j + 1] != '1')
+			break;
+		ft_flood_fill(map, &i, &j);
+	}
+	if (map[i - 1][j] != 'P' && map[i + 1][j] != 'P'
+		&& map[i][j - 1] != 'P' && map[i][j + 1] != 'P')
+	{
+		ft_free_str(game->map);
+		ft_free_str(map);
+		ft_error("Error\nplayer can't reach the exit.");
+	}
+}
+
 void	ft_check_road(t_map *game)
 {
 	char	**map_copy;
 
 	map_copy = ft_copy_map(game);
- 
+	ft_location(game, map_copy);
+	ft_reach_exit(game, map_copy);
 }
 
 void	ft_map(t_map *game, char *file)
@@ -92,10 +135,19 @@ void	ft_map(t_map *game, char *file)
 
 void	ft_struct_fill(t_map *game)
 {
+	int	i;
+
+	i = 0;
 	game->fd = 0;
 	game->width = 0;
 	game->hight = 0;
 	game->coins = 0;
+	while(i < 2)
+	{
+		game->exit[i] = 0;
+		game->player[i] = 0;
+		i++;
+	}
 	game->map = NULL;
 }
 
