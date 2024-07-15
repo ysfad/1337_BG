@@ -71,3 +71,14 @@ void	ft_split_map(t_map *game, char *tmp)
 		i++;
 	}
 }
+
+void	ft_struct_fill(t_map *game)
+{
+	game->fd = 0;
+	game->width = 0;
+	game->hight = 0;
+	game->coins = 0;
+	game->player[0] = 0;
+	game->player[1] = 0;
+	game->map = NULL;
+}

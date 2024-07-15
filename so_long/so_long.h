@@ -23,7 +23,6 @@ typedef struct s_map
     int     width;
     int     hight;
     int     coins;
-    int     exit[2];
     int     player[2];
     char    **map;
 }              t_map;
@@ -38,5 +37,11 @@ void	ft_check_lines(char *tmp);
 void	ft_check_walls(t_map *game);
 void    ft_check_land(t_map *game);
 void    ft_check_elements(t_map *game);
+void	ft_struct_fill(t_map *game);
+void	ft_check_map(t_map *game, char **map);
+void	ft_flood_fill(t_map *game, char **map, int x, int y);
+void	ft_check_land(t_map *game);
+void    ft_location(t_map *game, char **map);
+char	**ft_copy_map(t_map *game);
 
 #endif
