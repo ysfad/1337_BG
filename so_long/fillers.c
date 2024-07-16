@@ -42,10 +42,16 @@ char	*ft_fill_map(t_map *game, char *file)
 	char	*tmp;
 
 	game->fd = open(file, O_RDONLY);
+	if (game->fd < 0)
+	{
+		close(game->fd);
+		ft_error("Error\nfile don't exist");
+	}
 	line = get_next_line(game->fd);
 	if (line == NULL || *line == '\0')
     {
         free(line);
+		close(game->fd);
         ft_error("Error\nempty file.");
     }
 	tmp = ft_strdup(line);

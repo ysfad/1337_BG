@@ -16,12 +16,16 @@ CFLAGS = -Wall -Wextra -Werror
 LIBFT = libft/libft.a
 PRINTF = ft_printf/libftprintf.a
 
-all: $(SRC)
-	cc $(CFLAGS) -o $(NAME) $(SRC) $(PRINTF) $(LIBFT)
+all: $(NAME)
+
+$(NAME): $(SRC)
+	cc $(CFLAGS) $(SRC) $(PRINTF) $(LIBFT) -lmlx_Linux -lXext -lX11 -lm -lz -o $(NAME) 
+
 
 clean:
-	rm -rf $(NAME)
+	rm -f $(NAME)
 
-fclean: clean
+fclean:
+	$(clean)
 
 re: clean all

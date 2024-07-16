@@ -27,9 +27,9 @@ $(NAME):$(FTSO)
 all : $(NAME)
 
 clean :
-	rm -rf $(FTSO)
+	rm -f $(FTSO)
 
 fclean : clean
-	rm -rf $(NAME)
+	rm -f $(NAME)
 
 re : fclean all

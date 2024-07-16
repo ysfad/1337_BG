@@ -30,11 +30,16 @@ void	ft_map(t_map *game, char *file)
 
 int	main(int ac, char **av)
 {
-	t_map game;
+	t_map	game;
+	void	*mlx;
+	void	*window;
 
 	if (ac != 2)
 		return (0);
 	ft_check_ber(av[1]);
 	ft_struct_fill(&game);
 	ft_map(&game, av[1]);
+	mlx = mlx_init();
+	window = mlx_new_window(mlx, 800, 600, "3amr 7mar");
+    mlx_loop(mlx);
 }
