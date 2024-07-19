@@ -17,11 +17,11 @@ void	ft_check_ber(char *str)
 
 	len = ft_strlen(str);
 	if (len == 4)
-		ft_error("Error\nfile must be (file_name.ber).");
+		ft_error("file must be (file_name.ber).");
 	str = str + len - 4;
 	if (str[0] != '.' && str[1] != 'b' && str[1] != 'B' && str[2] != 'e'
 		&& str[2] != 'E' && str[3] != 'r' && str[3] != 'R')
-		ft_error("Error\nfile must be (file_name.ber).");
+		ft_error("file must be (file_name.ber).");
 }
 
 void	ft_check_lines(char *tmp)
@@ -42,15 +42,15 @@ void	ft_check_lines(char *tmp)
 	if (x == 1)
 	{
 		free(tmp);
-		ft_error("ERROR\nextra new line somewhere in the file.");
+		ft_error("extra new line somewhere in the file.");
 	}
 }
 
 void	ft_check_walls(t_map *game)
 {
-	int		i;
-	int		j;
-	int		x;
+	int	i;
+	int	j;
+	int	x;
 
 	i = 0;
 	j = 0;
@@ -71,40 +71,40 @@ void	ft_check_walls(t_map *game)
 	if (x == 1)
 	{
 		ft_free_str(game->map);
-		ft_error("ERROR\nall walls must equal 1.");
+		ft_error("all walls must equal 1.");
 	}
 }
 
-void    ft_check_P_E_C(t_map *game, char e, char *str)
+void	ft_check_p_e_c(t_map *game, char e, char *str)
 {
-    int i;
-    int j;
-    int count;
+	int	i;
+	int	j;
+	int	count;
 
-    i = 0;
-    count = 0;
-    while(game->map[i])
-    {
-        j = 0;
-        while(game->map[i][j])
-        {
-            if (count == 0 && game->map[i][j] == e)
-                count++;
-            j++;
-            if (count != 0 && game->map[i][j] == e)
-                count++;
-        }
-        i++;
-    }
-    ft_element_error(game, count, e, str);
+	i = 0;
+	count = 0;
+	while (game->map[i])
+	{
+		j = 0;
+		while (game->map[i][j])
+		{
+			if (count == 0 && game->map[i][j] == e)
+				count++;
+			j++;
+			if (count != 0 && game->map[i][j] == e)
+				count++;
+		}
+		i++;
+	}
+	ft_element_error(game, count, e, str);
 	if (e == 'C')
 		game->coins = count;
 }
 
-void    ft_check_elements(t_map *game)
+void	ft_check_elements(t_map *game)
 {
-    ft_check_P_E_C(game, 'P', "player");
-    ft_check_P_E_C(game, 'E', "exit");
-    ft_check_P_E_C(game, 'C', NULL);
+	ft_check_p_e_c(game, 'P', "player");
+	ft_check_p_e_c(game, 'E', "exit");
+	ft_check_p_e_c(game, 'C', NULL);
 	ft_check_land(game);
 }

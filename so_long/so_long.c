@@ -28,165 +28,18 @@ void	ft_map(t_map *game, char *file)
 	ft_free_str(map_copy);
 }
 
-void	ft_create_image(t_map *game)
-{
-	int	x;
-	int	y;
-
-	game->character = mlx_xpm_file_to_image(game->mlx, "mage.xpm", &x, &y);
-	game->wall = mlx_xpm_file_to_image(game->mlx, "wall.xpm", &x, &y);
-	game->land = mlx_xpm_file_to_image(game->mlx, "land.xpm", &x, &y);
-	game->ring = mlx_xpm_file_to_image(game->mlx, "ring.xpm", &x, &y);
-	game->door = mlx_xpm_file_to_image(game->mlx, "open_exit.xpm", &x, &y);
-	if(game->character == NULL || game->door == NULL
-		|| game->ring == NULL || game->land == NULL || game->wall == NULL)
-	{
-		free(game->mlx);
-		ft_free_str(game->map);
-		ft_error("Error\nproblem while loading the image.");
-	}
-
-}
-
-void	ft_put_image(t_map *game)
-{
-	int	i;
-	int	j;
-	char slot;
-
-	i = 0;
-	while(i < game->width)
-	{
-		j = 0;
-		while(j < game->height)
-		{
-			slot = game->map[j][i];
-			if(slot == '1')
-				mlx_put_image_to_window(game->mlx, game->win, game->wall, i * 50, j * 50);
-			else if(slot == 'P')
-				mlx_put_image_to_window(game->mlx, game->win, game->character, i * 50, j * 50);
-			else if(slot == 'E')
-				mlx_put_image_to_window(game->mlx, game->win, game->door, i * 50, j * 50);
-			else if(slot == 'C')
-				mlx_put_image_to_window(game->mlx, game->win, game->ring, i * 50, j * 50);
-			else if(slot == '0')
-				mlx_put_image_to_window(game->mlx, game->win, game->land, i * 50, j * 50);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	ft_exit_game(t_map *game, int cas)
-{
-	if (cas == 1)
-		ft_printf("YOU LOST THE GAME!");
-	else
-		ft_printf("YOU WON!!!");
-	mlx_destroy_image(game->mlx, game->wall);
-	mlx_destroy_image(game->mlx, game->land);
-	mlx_destroy_image(game->mlx, game->character);
-	mlx_destroy_image(game->mlx, game->door);
-	mlx_destroy_image(game->mlx, game->ring);
-	mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
-	ft_free_str(game->map);
-	exit(0);
-}
-
-void	ft_go_up(t_map *game)
-{
-	int	x;
-	int	y;
-
-	x = game->x;
-	y = game->y;
-	if (game->map[y - 1][x] == '0' || game->map[y - 1][x] == 'C')
-	{
-		if (game->map[y - 1][x] == 'C')
-			game->coins--;
-		game->map[y][x] = '0';
-		game->map[y - 1][x] = 'P';
-		ft_put_image(game);
-		game->y--;
-	}
-	else if (game->map[y - 1][x] == 'E' && game->coins == 0)
-		ft_exit_game(game, 2);
-}
-
-void	ft_go_down(t_map *game)
-{
-	int	x;
-	int	y;
-
-	x = game->x;
-	y = game->y;
-	if (game->map[y + 1][x] == '0' || game->map[y + 1][x] == 'C')
-	{
-		if (game->map[y + 1][x] == 'C')
-			game->coins--;
-		game->map[y][x] = '0';
-		game->map[y + 1][x] = 'P';
-		ft_put_image(game);
-		game->y++;
-	}
-	else if (game->map[y + 1][x] == 'E' && game->coins == 0)
-		ft_exit_game(game, 2);
-}
-
-void	ft_go_left(t_map *game)
-{
-	int	x;
-	int	y;
-
-	x = game->x;
-	y = game->y;
-	if (game->map[y][x - 1] == '0' || game->map[y][x - 1] == 'C')
-	{
-		if (game->map[y][x - 1] == 'C')
-			game->coins--;
-		game->map[y][x] = '0';
-		game->map[y][x - 1] = 'P';
-		ft_put_image(game);
-		game->x--;
-	}
-	else if (game->map[y][x - 1] == 'E' && game->coins == 0)
-		ft_exit_game(game, 2);
-}
-
-void	ft_go_right(t_map *game)
-{
-	int	x;
-	int	y;
-
-	x = game->x;
-	y = game->y;
-	if (game->map[y][x + 1] == '0' || game->map[y][x + 1] == 'C')
-	{
-		if (game->map[y][x + 1] == 'C')
-			game->coins--;
-		game->map[y][x] = '0';
-		game->map[y][x + 1] = 'P';
-		ft_put_image(game);
-		game->x++;
-	}
-	else if (game->map[y][x + 1] == 'E' && game->coins == 0)
-		ft_exit_game(game, 2);
-}
-
 int	ft_key_handle(int keycode, t_map *game)
 {
-	if(keycode == KEY_ESC)
-		ft_exit_game(game, 1);
-	else if (keycode == KEY_UP)
-		ft_go_up(game);
-	else if (keycode == KEY_DOWN)
-		ft_go_down(game);
-	else if (keycode == KEY_LEFT)
-		ft_go_left(game);
-	else if (keycode == KEY_RIGHT)
-		ft_go_right(game);
+	if (keycode == KEY_ESC)
+		ft_exit_game(game);
+	else if (keycode == KEY_UP || keycode == KEY_W)
+		ft_go_up(game, game->x, game->y);
+	else if (keycode == KEY_DOWN || keycode == KEY_S)
+		ft_go_down(game, game->x, game->y);
+	else if (keycode == KEY_LEFT || keycode == KEY_A)
+		ft_go_left(game, game->x, game->y);
+	else if (keycode == KEY_RIGHT || keycode == KEY_D)
+		ft_go_right(game, game->x, game->y);
 	return (0);
 }
 
@@ -194,16 +47,18 @@ void	ft_mlx_handle(t_map *game)
 {
 	game->mlx = mlx_init();
 	ft_create_image(game);
-	game->win = mlx_new_window(game->mlx, 50 * game->width, 50 * game->height, "3amr 7mar");
+	game->win = mlx_new_window(game->mlx, 50 * game->width, 50 * game->height,
+			"Mage Of The Rings");
 	ft_put_image(game);
+	ft_printf("Steps Taken: %i\n", game->steps);
 	mlx_key_hook(game->win, ft_key_handle, game);
+	mlx_hook(game->win, 17, 0, ft_exit_game, game);
 	mlx_loop(game->mlx);
 }
 
 int	main(int ac, char **av)
 {
 	t_map	game;
-
 
 	if (ac != 2)
 		return (0);

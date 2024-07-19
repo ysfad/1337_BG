@@ -27,29 +27,29 @@ char	**ft_copy_map(t_map *game)
 	return (copy_map);
 }
 
-void    ft_location(t_map *game, char **map)
+void	ft_location(t_map *game, char **map)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = 1;
-    while(i < game->height - 1)
-    {
-        j = 1;
-        while(j < game->width - 1)
-        {
+	i = 1;
+	while (i < game->height - 1)
+	{
+		j = 1;
+		while (j < game->width - 1)
+		{
 			if (map[i][j] == 'P')
 			{
 				game->x = j;
 				game->y = i;
-				break;
+				break ;
 			}
 			j++;
 		}
 		if (map[i][j] == 'P')
-			break;
-        i++;
-    }
+			break ;
+		i++;
+	}
 }
 
 void	ft_check_land(t_map *game)
@@ -69,8 +69,8 @@ void	ft_check_land(t_map *game)
 			{
 				ft_free_str(game->map);
 				ft_printf("Error\nwrong element inside the map.\n");
-                ft_printf("Elements: 1, 0, C, P, E.\n");
-                exit(1);
+				ft_printf("Elements: 1, 0, C, P, E.\n");
+				exit(1);
 			}
 			j++;
 		}
@@ -80,15 +80,14 @@ void	ft_check_land(t_map *game)
 
 void	ft_flood_fill(t_map *game, char **map, int x, int y)
 {
-	if (x >= game->width - 1 || x <= 0 || y >= game->height - 1
-		|| y <= 0)
+	if (x >= game->width - 1 || x <= 0 || y >= game->height - 1 || y <= 0)
 		return ;
 	if (map[y][x] == '1' || map[y][x] == 'S' || map[y][x] == 'X')
 		return ;
 	if (map[y][x] == 'E')
 	{
 		map[y][x] = 'X';
-		return;
+		return ;
 	}
 	map[y][x] = 'S';
 	ft_flood_fill(game, map, x + 1, y);
@@ -112,7 +111,7 @@ void	ft_check_map(t_map *game, char **map)
 			{
 				ft_free_str(game->map);
 				ft_free_str(map);
-				ft_error("Error\nplayer can't reach the exit or all the coins.");
+				ft_error("player can't reach the exit or all the coins.");
 			}
 			j++;
 		}

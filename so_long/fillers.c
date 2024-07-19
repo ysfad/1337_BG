@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 #include "so_long.h"
 
-char    *ft_fill_map_2(t_map *game, char *line, char *tmp)
+char	*ft_fill_map_2(t_map *game, char *line, char *tmp)
 {
-    char * tmp2;
+	char	*tmp2;
 
-    while (1)
+	while (1)
 	{
 		free(line);
 		line = get_next_line(game->fd);
@@ -28,12 +28,12 @@ char    *ft_fill_map_2(t_map *game, char *line, char *tmp)
 		free(tmp2);
 		if (tmp == NULL)
 		{
-            free(line);
-            free(tmp);
-			ft_error("Error\nallocation problem while saving the map lines");
+			free(line);
+			free(tmp);
+			ft_error("allocation problem while saving the map lines");
 		}
 	}
-    return (tmp);
+	return (tmp);
 }
 
 char	*ft_fill_map(t_map *game, char *file)
@@ -45,17 +45,17 @@ char	*ft_fill_map(t_map *game, char *file)
 	if (game->fd < 0)
 	{
 		close(game->fd);
-		ft_error("Error\nfile don't exist");
+		ft_error("file don't exist");
 	}
 	line = get_next_line(game->fd);
 	if (line == NULL || *line == '\0')
-    {
-        free(line);
+	{
+		free(line);
 		close(game->fd);
-        ft_error("Error\nempty file.");
-    }
+		ft_error("empty file.");
+	}
 	tmp = ft_strdup(line);
-    tmp = ft_fill_map_2(game, line, tmp);
+	tmp = ft_fill_map_2(game, line, tmp);
 	return (tmp);
 }
 
@@ -72,7 +72,7 @@ void	ft_split_map(t_map *game, char *tmp)
 		if (ft_strlen(game->map[i]) != game->width)
 		{
 			ft_free_str(game->map);
-			ft_error("ERROR\nall lines must be equals");
+			ft_error("all lines must be equals");
 		}
 		i++;
 	}
@@ -86,10 +86,13 @@ void	ft_struct_fill(t_map *game)
 	game->coins = 0;
 	game->x = 0;
 	game->y = 0;
+	game->steps = 0;
 	game->character = NULL;
 	game->door = NULL;
+	game->o_door = NULL;
 	game->land = NULL;
 	game->wall = NULL;
 	game->ring = NULL;
 	game->map = NULL;
+	game->bonus = NULL;
 }
