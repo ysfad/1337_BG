@@ -18,14 +18,28 @@
 #include "../mlx_linux/mlx.h"
 #include <math.h>
 
+#define KEY_ESC 65307
+#define KEY_UP 65362
+#define KEY_DOWN 65364
+#define KEY_LEFT 65361
+#define KEY_RIGHT 65363
+
 typedef struct s_map
 {
     int     fd;
     int     width;
-    int     hight;
+    int     height;
     int     coins;
-    int     player[2];
+    int     x;
+    int     y;
     char    **map;
+    void    *mlx;
+    void    *win;
+    void    *character;
+    void    *door;
+    void    *land;
+    void    *ring;
+    void    *wall;
 }              t_map;
 
 void	ft_error(char *s);

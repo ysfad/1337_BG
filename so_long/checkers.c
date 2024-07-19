@@ -55,13 +55,13 @@ void	ft_check_walls(t_map *game)
 	i = 0;
 	j = 0;
 	x = 0;
-	while (i < game->hight && x == 0)
+	while (i < game->height && x == 0)
 	{
 		j = 0;
 		while (j < game->width)
 		{
 			if (game->map[0][j] != '1' || game->map[i][game->width - 1] != '1'
-				|| game->map[game->hight - 1][j] != '1'
+				|| game->map[game->height - 1][j] != '1'
 				|| game->map[i][0] != '1')
 				x = 1;
 			j++;

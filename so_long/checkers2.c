@@ -17,7 +17,7 @@ char	**ft_copy_map(t_map *game)
 	char	**copy_map;
 
 	i = 0;
-	copy_map = (char **)malloc((game->hight + 1) * sizeof(char *));
+	copy_map = (char **)malloc((game->height + 1) * sizeof(char *));
 	while (game->map[i])
 	{
 		copy_map[i] = ft_strdup(game->map[i]);
@@ -33,15 +33,15 @@ void    ft_location(t_map *game, char **map)
     int j;
 
     i = 1;
-    while(i < game->hight - 1)
+    while(i < game->height - 1)
     {
         j = 1;
         while(j < game->width - 1)
         {
 			if (map[i][j] == 'P')
 			{
-				game->player[0] = j;
-				game->player[1] = i;
+				game->x = j;
+				game->y = i;
 				break;
 			}
 			j++;
@@ -80,7 +80,7 @@ void	ft_check_land(t_map *game)
 
 void	ft_flood_fill(t_map *game, char **map, int x, int y)
 {
-	if (x >= game->width - 1 || x <= 0 || y >= game->hight - 1
+	if (x >= game->width - 1 || x <= 0 || y >= game->height - 1
 		|| y <= 0)
 		return ;
 	if (map[y][x] == '1' || map[y][x] == 'S' || map[y][x] == 'X')
@@ -103,7 +103,7 @@ void	ft_check_map(t_map *game, char **map)
 	int	j;
 
 	i = 0;
-	while (i < game->hight)
+	while (i < game->height)
 	{
 		j = 0;
 		while (j < game->width)

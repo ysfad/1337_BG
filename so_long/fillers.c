@@ -19,7 +19,7 @@ char    *ft_fill_map_2(t_map *game, char *line, char *tmp)
 	{
 		free(line);
 		line = get_next_line(game->fd);
-		game->hight++;
+		game->height++;
 		if (line == NULL)
 			break ;
 		tmp2 = ft_strjoin(tmp, line);
@@ -82,9 +82,14 @@ void	ft_struct_fill(t_map *game)
 {
 	game->fd = 0;
 	game->width = 0;
-	game->hight = 0;
+	game->height = 0;
 	game->coins = 0;
-	game->player[0] = 0;
-	game->player[1] = 0;
+	game->x = 0;
+	game->y = 0;
+	game->character = NULL;
+	game->door = NULL;
+	game->land = NULL;
+	game->wall = NULL;
+	game->ring = NULL;
 	game->map = NULL;
 }
