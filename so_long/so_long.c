@@ -48,11 +48,6 @@ void	ft_create_image(t_map *game)
 
 }
 
-// void	ft_slot_fill(t_map *game, char slot, int x, int y)
-// {
-
-// }
-
 void	ft_put_image(t_map *game)
 {
 	int	i;
@@ -82,8 +77,12 @@ void	ft_put_image(t_map *game)
 	}
 }
 
-void	ft_exit_game(t_map *game)
+void	ft_exit_game(t_map *game, int cas)
 {
+	if (cas == 1)
+		ft_printf("YOU LOST THE GAME!");
+	else
+		ft_printf("YOU WON!!!");
 	mlx_destroy_image(game->mlx, game->wall);
 	mlx_destroy_image(game->mlx, game->land);
 	mlx_destroy_image(game->mlx, game->character);
@@ -98,14 +97,96 @@ void	ft_exit_game(t_map *game)
 
 void	ft_go_up(t_map *game)
 {
-	
+	int	x;
+	int	y;
+
+	x = game->x;
+	y = game->y;
+	if (game->map[y - 1][x] == '0' || game->map[y - 1][x] == 'C')
+	{
+		if (game->map[y - 1][x] == 'C')
+			game->coins--;
+		game->map[y][x] = '0';
+		game->map[y - 1][x] = 'P';
+		ft_put_image(game);
+		game->y--;
+	}
+	else if (game->map[y - 1][x] == 'E' && game->coins == 0)
+		ft_exit_game(game, 2);
 }
+
+void	ft_go_down(t_map *game)
+{
+	int	x;
+	int	y;
+
+	x = game->x;
+	y = game->y;
+	if (game->map[y + 1][x] == '0' || game->map[y + 1][x] == 'C')
+	{
+		if (game->map[y + 1][x] == 'C')
+			game->coins--;
+		game->map[y][x] = '0';
+		game->map[y + 1][x] = 'P';
+		ft_put_image(game);
+		game->y++;
+	}
+	else if (game->map[y + 1][x] == 'E' && game->coins == 0)
+		ft_exit_game(game, 2);
+}
+
+void	ft_go_left(t_map *game)
+{
+	int	x;
+	int	y;
+
+	x = game->x;
+	y = game->y;
+	if (game->map[y][x - 1] == '0' || game->map[y][x - 1] == 'C')
+	{
+		if (game->map[y][x - 1] == 'C')
+			game->coins--;
+		game->map[y][x] = '0';
+		game->map[y][x - 1] = 'P';
+		ft_put_image(game);
+		game->x--;
+	}
+	else if (game->map[y][x - 1] == 'E' && game->coins == 0)
+		ft_exit_game(game, 2);
+}
+
+void	ft_go_right(t_map *game)
+{
+	int	x;
+	int	y;
+
+	x = game->x;
+	y = game->y;
+	if (game->map[y][x + 1] == '0' || game->map[y][x + 1] == 'C')
+	{
+		if (game->map[y][x + 1] == 'C')
+			game->coins--;
+		game->map[y][x] = '0';
+		game->map[y][x + 1] = 'P';
+		ft_put_image(game);
+		game->x++;
+	}
+	else if (game->map[y][x + 1] == 'E' && game->coins == 0)
+		ft_exit_game(game, 2);
+}
+
 int	ft_key_handle(int keycode, t_map *game)
 {
 	if(keycode == KEY_ESC)
-		ft_exit_game(game);
+		ft_exit_game(game, 1);
 	else if (keycode == KEY_UP)
 		ft_go_up(game);
+	else if (keycode == KEY_DOWN)
+		ft_go_down(game);
+	else if (keycode == KEY_LEFT)
+		ft_go_left(game);
+	else if (keycode == KEY_RIGHT)
+		ft_go_right(game);
 	return (0);
 }
 
